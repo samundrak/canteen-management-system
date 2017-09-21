@@ -1,0 +1,44 @@
+{
+  "presets": [
+    "react",
+    "es2015",
+    "stage-3",
+    "env"
+  ],
+  "plugins": [
+    "dynamic-import-webpack",
+    "transform-object-rest-spread",
+    "transform-regenerator",
+    "transform-runtime",
+    "add-module-exports",
+    "syntax-trailing-function-commas",
+    "transform-runtime",
+    "react-hot-loader/babel",
+    [
+      "transform-class-properties",
+      {
+        "spec": true
+      }
+    ]
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    },
+    "production": {
+      "plugins": [
+        [
+          "lodash",
+          {
+            "id": [
+              "lodash",
+              "semantic-ui-react"
+            ]
+          }
+        ]
+      ]
+    }
+  }
+}

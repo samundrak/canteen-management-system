@@ -1,0 +1,78 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "airbnb"
+  ],
+  "plugins": [
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "require": true,
+    "global": true,
+    "alertify": true,
+    "process": true
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jquery": true,
+    "mocha": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": 0,
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "warn",
+      {
+        "aspects": [
+          "invalidHref"
+        ]
+      }
+    ],
+    "quotes": 0,
+    "import/prefer-default-export": 0,
+    "no-console": 0,
+    "no-debugger": 1,
+    "semi": [
+      1,
+      "always"
+    ],
+    "no-underscore-dangle": 0,
+    "jsx-quotes": 1,
+    "react/display-name": [
+      1,
+      {
+        "ignoreTranspilerName": false
+      }
+    ],
+    "react/forbid-prop-types": [
+      1,
+      {
+        "forbid": [
+          "any"
+        ]
+      }
+    ],
+    "class-methods-use-this": 0,
+    "no-empty-label": 0,
+    "max-len": [
+      "error",
+      150
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "build/webpack.config.dev.js"
+      }
+    }
+  }
+}

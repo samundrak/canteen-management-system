@@ -1,0 +1,10 @@
+html
+  head
+    title Activate Account
+  body
+    h2 Hello #{user.first_name } #{user.last_name}
+    p Thank you for registering with us, please click the link below to activate your account
+    p
+      a(href="#{host}/verify/#{hash}") Active Account
+    p If you can't click the link above please follow the link below
+    p link #{host}/verify/#{hash}
