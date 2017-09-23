@@ -1,15 +1,15 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jwt-simple");
 const pick = require('lodash/fp/pick');
+const omit = require('lodash/fp/omit');
 const UserModel = require('../../model/User');
 const strings = require('../../Strings');
+const UserRepo = require('../../repositories/UserRepository');
 
 const cfg = global.config();
 const Promise = global.Promise;
-const _ = global._;
 
 class User {
-
   static getToken(user) {
     return jwt.encode(user, cfg.auth.jwt.secret);
   }
@@ -23,40 +23,15 @@ class User {
   }
 
   static find(clause) {
-    return new Promise((resolve, reject) => {
-      UserModel.findOne(clause, (error, user) => {
-        if (error || !user) {
-          return reject('No User found');
-        }
-
-        user = _.omit(user, ['password']);
-        return resolve(user);
-      });
-    });
+    return UserRepo.find(clause);
   }
 
   static exists(filter) {
-    return new Promise((resolve, reject) => {
-      UserModel.findOne(filter, (error, user) => {
-        if (user) {
-          return resolve(user);
-        }
-
-        return reject('No result found');
-      });
-    });
+    return UserRepo.exists(filter);
   }
 
   static update(condition, update) {
-    return new Promise((resolve, reject) => {
-      UserModel.update(condition, update, (error, user) => {
-        if (error) {
-          return reject(error);
-        }
-
-        return resolve(user);
-      });
-    });
+    UserRepo.update(condition, update);
   }
 
   static login(username, password) {
@@ -65,23 +40,25 @@ class User {
         email: username,
       }).then((user) => {
         if (!user.status) {
-          return reject(`Your account is not active, Please check your email ${user.email}`);
+          return reject(
+            new Error(`Your account is not active, Please check your email ${user.email}`),
+          );
         }
 
         if (!bcrypt.compareSync(password, user.password)) {
-          return reject(`Username/Password didn't matched.`);
+          return reject(new Error('Username/Password didn\'t matched.'));
         }
 
 
-        user = global._.pick(user, ['_id', 'email']);
+        const userInformation = pick(['_id', 'email'])(user);
         return resolve({
-          token: User.getToken(user),
+          token: User.getToken(userInformation),
         });
-      }, () => reject(`No User found.`));
+      }, () => reject(new Error('No User found.')));
     });
   }
 
-  static register({ email, password, first_name, last_name, service }) {
+  static register({ email, password, first_name, last_name }) {
     const salt = User.getSalt();
     let newPassword;
     if (password) {
@@ -94,6 +71,7 @@ class User {
       password: newPassword,
       first_name,
       last_name,
+      status: 1,
       hash,
     };
 

@@ -5,11 +5,6 @@ const startCase = require('lodash/fp/startCase');
 module.exports = {
 
   /*
-   Its formatted validation message
-   */
-  formattedValMessage: errors => errors.map(error => error.msg),
-
-  /*
   * Encrypt
   * */
   encrypt(plain) {
@@ -27,7 +22,6 @@ module.exports = {
   },
 
   joi(payload, schema, options = {}, cb = null) {
-    console.log(options);
     const validation = Joi.validate(payload, schema, options, cb);
     if (!validation.error) {
       return { status: true };

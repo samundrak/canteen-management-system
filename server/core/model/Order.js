@@ -7,7 +7,7 @@ const Order = mongoose.Schema({
   food_id: {
     type: String,
   },
-  order_approved_by: { type: String },
+  order_approved_by: { type: String, default: null },
   status: {
     type: String,
     enum: ['accepted', 'rejected', 'served'],

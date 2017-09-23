@@ -1,6 +1,12 @@
 const UserModel = require('../model/User');
+const omit = require('lodash/fp/omit');
 
 class UserRepository {
+
+  static all(clause = {}, select = 'email first_name last_name created_at status') {
+    return UserModel.find(clause)
+      .select(select);
+  }
 
   static find(clause) {
     return new Promise((resolve, reject) => {
@@ -9,7 +15,8 @@ class UserRepository {
           return reject(new Error('No User found'));
         }
 
-        return resolve(user);
+        const data = omit(['password', 'hash'])(user.toObject());
+        return resolve(data);
       });
     });
   }

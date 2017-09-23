@@ -3,6 +3,7 @@ const Guest = require('../services/Guest');
 const strings = require('../Strings');
 const Validator = require('validatorjs');
 const UserService = require('../services/User');
+const User = require('../services/User');
 
 module.exports = {
 
@@ -115,5 +116,49 @@ module.exports = {
     }
 
     return res.render('app', { development: true });
+  },
+  register: (req, res) => User.exists({ email: req.body.email })
+    .then(() => res.boom.badData('Email already in used.'))
+    .catch(() => User.register(req.body)
+      .then(
+        user => res.status(201).json(user),
+        error => res.boom.badImplementation(error),
+      )),
+  login: (req, res) => {
+    const { email, password } = req.body;
+
+    return User.login(email, password)
+      .then(
+        user => res.status(200).json(user),
+        error => res.boom.unauthorized(error),
+      );
+  },
+  verifyHash(req, res) {
+    User.exists({
+      hash: req.params.hash,
+    }).then((user) => {
+      if (user.status) {
+        return res.render(strings.ACCOUNT_ALREADY_ACTIVATED);
+      }
+      return User.update({ hash: req.params.hash }, { status: 1 },
+      ).then(() => res.render(strings.ACCOUNT_ACTIVE),
+        () => res.send('Unable to activate.').status(500));
+    }, () => res.send('Incorrect verification code.').status(401));
+  },
+  generateToken(req, res) {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (username && password) {
+      return User.login(username, password)
+        .then(
+          user => res.json({ token: User.getToken(user) }),
+          error => res.boom.unauthorized(error),
+        );
+    }
+    return res.boom.unauthorized();
+  },
+  me(req, res) {
+    res.json(req.user);
   },
 };

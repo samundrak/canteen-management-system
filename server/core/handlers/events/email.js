@@ -1,4 +1,4 @@
-const Email = require('../../services/email/Email');
+const Email = require('../../services/Email/Email');
 
 module.exports = ({ to, from = null, subject, message, template = null }) => {
   const email = new Email();
