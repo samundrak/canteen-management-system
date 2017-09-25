@@ -10,8 +10,21 @@ const FORGOT_PASSWORD = 'Password reset link';
 const ROLE_USER = 'user';
 const ROLE_ADMIN = 'admin';
 const ROLE_OWNER = 'owner';
+const SHIFT = {
+  DAY: 'day',
+  MORNING: 'morning',
+  NIGHT: 'night',
+};
+const STATUS = {
+  PENDING: 'pending',
+  APPROVED: 'approved',
+  REJECTED: 'rejected',
+  SERVED: 'served',
+};
 
 module.exports = {
+  SHIFT,
+  STATUS,
   FORGOT_PASSWORD,
   TEMPLATE_OF_FORGOT_PASSWORD,
   ACCOUNT_ACTIVE,

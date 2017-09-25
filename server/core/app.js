@@ -44,6 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(auth.initialize());
 app.use(express.static(path.join(__dirname, '../../public')));
+
 if (process.env.NODE_ENV !== 'production') {
   winstonLogsDisplay(app, global.logger);
 }

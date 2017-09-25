@@ -23,9 +23,9 @@ api.delete('/foods/:id', food.destroy);
 api.put('/foods/:id', requestValidator(foodSchema), food.update);
 
 /* Order api routes */
-//api.get('/orders', order.index);
+api.get('/orders', order.index);
 api.post('/orders', requestValidator(orderSchema), order.create);
-//api.get('/orders/:id', order.show);
-//api.delete('/orders/:id', order.destroy);
+api.get('/orders/:id', order.show);
+api.delete('/orders/:id', order.destroy);
 
 module.exports = api;

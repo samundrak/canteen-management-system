@@ -32,4 +32,7 @@ module.exports = {
       messages: validation.error.details.map(item => startCase(item.message)),
     };
   },
+  cleanString(string) {
+    return string.replace(/\s\s+/g, ' ');
+  },
 };

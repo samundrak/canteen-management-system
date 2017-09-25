@@ -1,9 +1,15 @@
 const OrderModel = require('../model/Order');
 
 class OrderRepository {
-
-  static count(user) {
-    return OrderModel.count({ user_id: user });
+  static getOrdersInRange(userId, start, end) {
+    return OrderModel
+      .find({
+        user_id: userId,
+        created_at: {
+          $lt: end,
+          $gt: start,
+        },
+      });
   }
 
   static create(food) {
