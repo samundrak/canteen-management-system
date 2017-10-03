@@ -7,6 +7,7 @@ module.exports = {
     return orderService.create(req.body, req.user)
       .then(food => res.status(201).json(food))
       .catch((err) => {
+        console.log(err);
         if (typeof err === 'object') {
           global.logger.error(err);
           return res.boom.badImplementation();
@@ -16,7 +17,8 @@ module.exports = {
       });
   },
   index(req, res) {
-    return OrderRepo.all()
+    const orderService = new OrderService();
+    return orderService.all()
       .then(orders => res.json(orders))
       .catch(() => res.boom.badImplementation());
   },
@@ -28,7 +30,7 @@ module.exports = {
   destroy({ params: { id }, user }, res) {
     const orderService = new OrderService();
     orderService.delete(id, user)
-      .then(() => res.end())
+      .then(() => res.status(204).send())
       .catch((reason) => {
         if (typeof reason === 'object') {
           global.logger.error(reason);
@@ -37,5 +39,11 @@ module.exports = {
 
         return res.boom.badRequest(reason);
       });
+  },
+  update({ params: { id }, body }, res) {
+    console.log(body);
+    OrderRepo.update({ _id: id }, body)
+      .then(() => res.status(204).send())
+      .catch(() => res.boom.badImplementation());
   },
 };

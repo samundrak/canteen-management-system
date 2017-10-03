@@ -26,7 +26,7 @@ module.exports = () => {
             return done(null, false);
           }
 
-          const newUser = pick(['email', 'first_name', 'last_name', 'status', '_id', 'subscription_ends_at', 'created_at'])(user);
+          const newUser = pick(['email', 'role','first_name', 'last_name', 'status', '_id', 'created_at'])(user);
           newUser.isCustomer = !!(user.customer_id);
           if (user.customer_id) {
             newUser.customer_id = encrypt(user.customer_id);

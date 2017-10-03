@@ -1,9 +1,18 @@
 const getHours = require('date-fns/get_hours');
 const setHours = require('date-fns/set_hours');
+const format = require('date-fns/format');
+const pluck = require('lodash/fp/pluck');
+const pick = require('lodash/fp/pick');
+const uniq = require('lodash/fp/uniq');
+const find = require('lodash/fp/find');
 const isWithinRange = require('date-fns/is_within_range');
 const OrderRepo = require('../../repositories/OrderRepository');
+const FoodRepo = require('../../repositories/FoodRepository');
+const UserRepo = require('../../repositories/UserRepository');
+
 const { SHIFT, STATUS } = require('../../Strings');
 
+const DATE_FORMAT = 'YYYY/M/D h:m:s a';
 class Order {
   static getLimit() {
     return 10;
@@ -50,15 +59,15 @@ class Order {
       if (!Order.isInRange(shift)) {
         return Promise.reject(
           `Order time for this ${shift} shift is closed,
-           you can order for ${this.getNextShift(shift)} shift
-            from ${timeLine.start} to ${timeLine.end}`);
+           you can order for ${Order.getNextShift(shift)} shift
+            from ${format(timeLine.start, DATE_FORMAT)} to ${format(timeLine.end, DATE_FORMAT)}`);
       }
       const orders = await OrderRepo.getOrdersInRange(user._id, timeLine.start, timeLine.end);
       if (orders.length > Order.getLimit()) {
         return Promise.reject(
-          `Your limitation for ${shift} shift has finished, 
+          `Your limitation for ${shift} shift has finished,
           you can order for ${Order.getNextShift(shift)}
-          from ${timeLine.start} to ${timeLine.end}
+          from ${format(timeLine.start, DATE_FORMAT)} to ${format(timeLine.end, DATE_FORMAT)}
           `,
         );
       }
@@ -68,7 +77,7 @@ class Order {
         food_id: order.food_id,
       });
     } catch (err) {
-      return Promise.reject();
+      return Promise.reject(err);
     }
   }
 
@@ -91,6 +100,26 @@ class Order {
 
       return OrderRepo.destroy(orderId);
     } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  async all() {
+    try {
+      const orders =  await OrderRepo.all();
+      const foodsIds = uniq(pluck('food_id')(orders)) || [];
+      const foods = await FoodRepo.in(foodsIds);
+      const usersIds = uniq(pluck('user_id')(orders)) || [];
+      const users = await UserRepo.in(usersIds);
+
+      const newOrders = orders.map((order) => Object.assign({}, order.toObject(), {
+          created_at: format(order.created_at, DATE_FORMAT),
+           food: foods.find(food => food._id + '' === order.food_id),
+           user: pick(['email','first_name','last_name'])
+            (users.find(user => user._id + '' === order.user_id)),
+         }));
+      return Promise.resolve(newOrders);
+    }catch(error) {
       return Promise.reject(error);
     }
   }

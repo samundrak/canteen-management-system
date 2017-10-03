@@ -44,6 +44,9 @@ class UserRepository {
       });
     });
   }
+  static in(ids) {
+    return UserModel.find({ _id: {$in: ids}});
+  }
 }
 
 module.exports = UserRepository;

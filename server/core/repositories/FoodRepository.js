@@ -20,6 +20,10 @@ class FoodRepository {
   static destroy(id) {
     return FoodModel.find({ _id: id }).remove();
   }
+
+  static in(ids) {
+    return FoodModel.find({ _id: {$in: ids}});
+  }
 }
 
 module.exports = FoodRepository;
