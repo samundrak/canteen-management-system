@@ -25,8 +25,8 @@ after running command for mongo.
 #Note
 * Prebuild frontend app is bundled with this app, if you want to rebuild
 frontend app then please clone it and run both parallel you can use pm2 to
-run both or user node module `serve`.
-* If you set port other then 3000 then please rebuild frontend app run also dont forget
+run both or use node module `serve`.
+* If you set port other then 3000 then please rebuild frontend app also dont forget
 to replace public folder files with newly generated app.
 
 #Test
