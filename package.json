@@ -11,6 +11,7 @@
     "maildev": "./node_modules/.bin/maildev",
     "mongo": "sudo mongod",
     "dep": "npm-run-all --parallel mongo maildev",
+    "seed": "node ./seeds/index.js",
     "test": "./node_modules/.bin/mocha test/server/**/**.js"
   },
   "dependencies": {

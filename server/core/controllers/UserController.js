@@ -15,9 +15,14 @@ module.exports = {
         return res.boom.badImplementation();
       });
   },
-  update({ params: { id }, body }, res) {
+  update({user, params: { id }, body }, res) {
+    delete body._id;
+    console.log( user._id +'' === id)
+    if(user.role === 'user' && user._id +'' !== id) {
+      return res.boom.unauthorized();
+    }
     UserRepo.update({ _id: id }, body)
-      .then(() => res.status(200).send())
+      .then(() => res.status(204).send())
       .catch((error) => {
         global.logger.error(error);
         res.boom.badImplementation();

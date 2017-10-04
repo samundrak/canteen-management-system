@@ -40,6 +40,7 @@ app.use(cors());
 app.use(boom());
 app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(auth.initialize());
@@ -137,4 +138,3 @@ process.on("rejectionHandled", (promise) => {
   console.log(promise);
 });
 process.on('uncaughtException', console.log);
-

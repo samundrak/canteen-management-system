@@ -3,7 +3,7 @@ const omit = require('lodash/fp/omit');
 
 class UserRepository {
 
-  static all(clause = {}, select = 'email first_name last_name created_at status') {
+  static all(clause = {}, select = 'role email first_name last_name created_at status') {
     return UserModel.find(clause)
       .select(select);
   }
@@ -34,16 +34,9 @@ class UserRepository {
   }
 
   static update(condition, update) {
-    return new Promise((resolve, reject) => {
-      UserModel.update(condition, update, (error, user) => {
-        if (error) {
-          return reject(error);
-        }
-
-        return resolve(user);
-      });
-    });
+    return UserModel.update(condition, update);
   }
+
   static in(ids) {
     return UserModel.find({ _id: {$in: ids}});
   }

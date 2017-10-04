@@ -16,8 +16,8 @@ class OrderRepository {
     return OrderModel.create(food);
   }
 
-  static all() {
-    return OrderModel.find({});
+  static all(clause = {}) {
+    return OrderModel.find(clause);
   }
 
   static findOne(clause, ...spread) {

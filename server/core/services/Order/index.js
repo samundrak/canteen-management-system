@@ -104,9 +104,13 @@ class Order {
     }
   }
 
-  async all() {
+  async all(user) {
     try {
-      const orders =  await OrderRepo.all();
+      const clause = {};
+      if(user.role === 'user') {
+        clause.user_id = user._id;
+      }
+      const orders =  await OrderRepo.all(clause);
       const foodsIds = uniq(pluck('food_id')(orders)) || [];
       const foods = await FoodRepo.in(foodsIds);
       const usersIds = uniq(pluck('user_id')(orders)) || [];

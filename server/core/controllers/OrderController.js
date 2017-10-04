@@ -18,7 +18,7 @@ module.exports = {
   },
   index(req, res) {
     const orderService = new OrderService();
-    return orderService.all()
+    return orderService.all(req.user)
       .then(orders => res.json(orders))
       .catch(() => res.boom.badImplementation());
   },
@@ -40,8 +40,10 @@ module.exports = {
         return res.boom.badRequest(reason);
       });
   },
-  update({ params: { id }, body }, res) {
-    console.log(body);
+  update({ user, params: { id }, body }, res) {
+    if(user.role === 'user' && body.status) {
+      return res.boom.unauthorized();
+    }
     OrderRepo.update({ _id: id }, body)
       .then(() => res.status(204).send())
       .catch(() => res.boom.badImplementation());
