@@ -13,8 +13,23 @@ after running command for mongo.
 * Run `npm run seed` to seed database on another terminal
 
 #Run
+* Copy file `.env.example` to `.env` and change env details if needed
 * After doing seed and running dependencies, run `npm start`
+* Then visit http://localhost:3000 to access app
+* After running seed two new user will be created,which you can use to access app or register if needed
+    - Email: owner@gmail.com, Password: 12345678
+    - Email: admin@gmail.com, Password: 12345678
+* Admin Access will be shown on same page if user role are admin and owner
+* Admin & Owner can Change user status, Add Food Item, Approve, Reject, Cancel the food order.
+
+#Note
+* Prebuild frontend app is bundled with this app, if you want to rebuild
+frontend app then please clone it and run both parallel you can use pm2 to
+run both or user node module `serve`.
+* If you set port other then 3000 then please rebuild frontend app run also dont forget
+to replace public folder files with newly generated app.
 
 #Test
 * Run server before test
 * Run `npm t`
+  

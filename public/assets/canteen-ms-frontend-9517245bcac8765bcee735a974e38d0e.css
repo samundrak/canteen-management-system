@@ -1,0 +1,1 @@
+.loader{border:16px solid #f3f3f3;border-top:16px solid #3498db;border-radius:50%;width:120px;height:120px;animation:spin 2s linear infinite;display:table;margin:0 auto}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.loader-container{position:absolute;width:-webkit-fill-available;height:-webkit-fill-available}

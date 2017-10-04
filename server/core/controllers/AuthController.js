@@ -98,24 +98,10 @@ module.exports = {
       });
   },
   home(req, res) {
-    if (process.env.NODE_ENV === 'production') {
-      return res.sendFile(
-        path.join(__dirname, '../../views/guest/index.html',
-        ),
-      );
-    }
-
-    return res.render('guest', { development: true });
-  },
-  app(req, res) {
-    if (process.env.NODE_ENV === 'production') {
-      return res.sendFile(
-        path.join(__dirname, '../../views/app/index.html',
-        ),
-      );
-    }
-
-    return res.render('app', { development: true });
+    return res.sendFile(
+      path.join(__dirname, '../../../public/index.html',
+      ),
+    );
   },
   register: (req, res) => User.exists({ email: req.body.email })
     .then(() => res.boom.badData('Email already in used.'))
