@@ -6,7 +6,7 @@
   "author": "Samundra Kc",
   "license": "MIT",
   "scripts": {
-    "start": "npm-run-all --parallel open:server",
+    "start": "node server/core/app.js",
     "open:server": "nodemon server/core/app.js --watch server/core",
     "maildev": "./node_modules/.bin/maildev",
     "mongo": "sudo mongod",
