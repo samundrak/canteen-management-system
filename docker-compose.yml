@@ -1,0 +1,22 @@
+version: '3'
+services:
+  app:
+    env_file: env_file
+    container_name: app
+    build: canteen-management-system
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    ports:
+      - '3000:3000'
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+  # frontend:
+  #   container_name: cms-frontend
+  #   image: cms-frontend:latest
+  #   ports:
+  #     - '3000:4200'
