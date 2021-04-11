@@ -8,9 +8,9 @@
   "scripts": {
     "start": "node server/core/app.js",
     "open:server": "nodemon server/core/app.js --watch server/core",
+    "start:dev":"npm-run-all --parallel open:server maildev",
     "maildev": "./node_modules/.bin/maildev",
-    "mongo": "sudo mongod",
-    "dep": "npm-run-all --parallel mongo maildev",
+    "dep": "npm-run-all --parallel maildev",
     "seed": "node ./seeds/index.js",
     "test": "./node_modules/.bin/mocha test/server/**/**.js"
   },
@@ -18,7 +18,7 @@
     "alertifyjs": "1.11.0",
     "auto-bind": "1.1.0",
     "axios": "0.15.2",
-    "bcrypt": "0.8.7",
+    "bcrypt": "^5.0.1",
     "bluebird": "3.5.0",
     "body-parser": "1.15.2",
     "chai": "^4.1.2",
