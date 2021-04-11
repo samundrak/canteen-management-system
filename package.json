@@ -81,7 +81,7 @@
     "eslint-config-airbnb": "15.1.0",
     "eslint-watch": "3.1.2",
     "mongoose-seed": "0.3.2",
-    "node-sass": "4.5.3",
+    "node-sass": "4.13.1",
     "npm-run-all": "1.8.0",
     "rimraf": "2.5.2",
     "sass-loader": "6.0.6"
