@@ -2,9 +2,9 @@ const env = process.env;
 const config = {
   app: {
     "frontend-port": "3001",
-    port: 3000,
-    name: 'CanteenMS',
-    domain: 'canteenms.net',
+    port: process.env.CMS_APP_PORT,
+    name: "CanteenMS",
+    domain: "canteenms.net",
   },
   database: {
     mongo: {
@@ -26,7 +26,7 @@ const config = {
   },
 };
 
-if (env.NODE_ENV === 'production') {
+if (env.NODE_ENV === "production") {
   config.email.user = env.MAIL_USER_NAME;
   config.email.password = env.MAIL_PASSWORD;
 }
