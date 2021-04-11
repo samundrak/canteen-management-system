@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node server/core/app.js",
     "open:server": "nodemon server/core/app.js --watch server/core",
-    "start:dev":"npm-run-all --parallel open:server maildev",
+    "start:dev": "npm-run-all --parallel open:server maildev",
     "maildev": "./node_modules/.bin/maildev",
     "dep": "npm-run-all --parallel maildev",
     "seed": "node ./seeds/index.js",
@@ -77,14 +77,9 @@
     "babel-preset-stage-3": "6.24.1",
     "babel-register": "6.26.0",
     "colors": "1.1.2",
-    "eslint": "4.5.0",
-    "eslint-config-airbnb": "15.1.0",
-    "eslint-watch": "3.1.2",
     "mongoose-seed": "0.3.2",
-    "node-sass": "4.5.3",
     "npm-run-all": "1.8.0",
-    "rimraf": "2.5.2",
-    "sass-loader": "6.0.6"
+    "rimraf": "2.5.2"
   },
   "repository": {
     "type": "git"
