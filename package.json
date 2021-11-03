@@ -55,7 +55,7 @@
     "promise.prototype.finally": "3.0.0",
     "resource-router-middleware": "^0.7.0",
     "uuid": "3.1.0",
-    "validator": "8.0.0",
+    "validator": "13.7.0",
     "validatorjs": "3.11.0",
     "winston": "2.3.1",
     "winston-logs-display": "0.1.1"
